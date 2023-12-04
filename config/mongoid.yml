@@ -1,27 +1,32 @@
+# config/mongoid.yml
+
 development:
   clients:
     default:
-      database: e_shop_api_development
-      hosts:
-        - localhost:27017
+      uri: mongodb+srv://prime1:dkUk1r1EpuIWwmCp@cluster0.6tyr6h6.mongodb.net/?retryWrites=true&w=majority
       options:
-  options:
+        server_selection_timeout: 5
 
-test:
-  clients:
-    default:
-      database: e_shop_api_test
-      hosts:
-        - localhost:27017
-      options:
-        read:
-          mode: :primary
-        max_pool_size: 1
+#test:
+#  clients:
+#    default:
+#      uri: mongodb+srv://prime:KgdgvyVEcsgZrON1@e-shop-database.5ywujaj.mongodb.net/?retryWrites=true&w=majority
+#      options:
+#        server_selection_timeout: 5
 
-production:
-  clients:
-    default:
-      uri: <%= ENV['MONGO_DB_URI'] %>
-  options:
-    background_indexing: true
-    raise_not_found_error: false
+#production:
+#  clients:
+#    default:
+#      uri: mongodb+srv://prime:KgdgvyVEcsgZrON1@e-shop-database.5ywujaj.mongodb.net/?retryWrites=true&w=majority
+#      options:
+#        server_selection_timeout: 5
+
+#development:
+#  clients:
+#    default:
+#      database: dev_database
+#      hosts:
+#        - atlas-5g139q-shard-00-01.cyx5kwu.mongodb.net:27017
+#      options:
+#        user: Cluster68951
+#        password: X0p2RHNJS0NJ
