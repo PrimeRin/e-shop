@@ -1,19 +1,38 @@
-FROM ruby:2.7.8
+# Make sure it matches the Ruby version in .ruby-version and Gemfile
+ARG RUBY_VERSION=2.7.8
+FROM ruby:$RUBY_VERSION
 
-# Set the working directory in the container
-WORKDIR /app
+# Install libvips for Active Storage preview support
+RUN apt-get update -qq && \
+    apt-get install -y build-essential libvips && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /usr/share/doc /usr/share/man
 
-# Install dependencies
-RUN apt-get update -qq && apt-get install -y nodejs
+# Rails app lives here
+WORKDIR /rails
 
-# Copy Gemfile and Gemfile.lock to the container
+# Set production environment
+ENV RAILS_LOG_TO_STDOUT="1" \
+    RAILS_SERVE_STATIC_FILES="true" \
+    RAILS_ENV="production" \
+    BUNDLE_WITHOUT="development"
+
+# Install application gems
 COPY Gemfile Gemfile.lock ./
+RUN bundle install
 
-# Install gems
-RUN gem install bundler && bundle install
-
-# Copy the application code to the container
+# Copy application code
 COPY . .
 
-# Start the Rails server
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# Set the MONGODB_URI environment variable
+ENV MONGODB_URI="$MONGODB_URI"
+
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile --gemfile app/ lib/
+
+# Entrypoint prepares the database.
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+
+# Start the server by default, this can be overwritten at runtime
+EXPOSE 3000
+CMD ["./bin/rails", "server"]

@@ -3,30 +3,20 @@
 development:
   clients:
     default:
-      uri: mongodb+srv://prime1:dkUk1r1EpuIWwmCp@cluster0.6tyr6h6.mongodb.net/?retryWrites=true&w=majority
+      uri: <%= ENV['MONGODB_URI']%>
       options:
         server_selection_timeout: 5
 
-#test:
-#  clients:
-#    default:
-#      uri: mongodb+srv://prime:KgdgvyVEcsgZrON1@e-shop-database.5ywujaj.mongodb.net/?retryWrites=true&w=majority
-#      options:
-#        server_selection_timeout: 5
+test:
+  clients:
+    default:
+      uri: <%= ENV['MONGODB_URI']%>
+      options:
+        server_selection_timeout: 5
 
-#production:
-#  clients:
-#    default:
-#      uri: mongodb+srv://prime:KgdgvyVEcsgZrON1@e-shop-database.5ywujaj.mongodb.net/?retryWrites=true&w=majority
-#      options:
-#        server_selection_timeout: 5
-
-#development:
-#  clients:
-#    default:
-#      database: dev_database
-#      hosts:
-#        - atlas-5g139q-shard-00-01.cyx5kwu.mongodb.net:27017
-#      options:
-#        user: Cluster68951
-#        password: X0p2RHNJS0NJ
+production:
+  clients:
+    default:
+      uri: <%= ENV['MONGODB_URI']%>
+      options:
+        server_selection_timeout: 5
