@@ -25,7 +25,7 @@ RUN bundle install
 COPY . .
 
 # Set the MONGODB_URI environment variable
-ENV MONGODB_URI="$MONGODB_URI"
+ENV MONGODB_URI="mongodb+srv://prime4:nrtG8V83tsZ6xzPc@cluster0.mwaqbau.mongodb.net/test?retryWrites=true&w=majority"
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
